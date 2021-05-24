@@ -1,0 +1,11 @@
+---
+# vars file for ec2
+key: mykey1111
+region: ap-south-1
+instance_type: t2.micro
+image_id: ami-0bcf5425cdc1d8a85
+security_group_id: sg-078f12b1646163210
+subnet_id: subnet-a6b882ce
+count_of_master: 1
+count_of_slave: 1 
+

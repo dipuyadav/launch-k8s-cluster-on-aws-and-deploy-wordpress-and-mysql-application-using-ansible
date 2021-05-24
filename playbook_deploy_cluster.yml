@@ -1,0 +1,8 @@
+- hosts: tag_Name_k8s_master
+  roles:
+  - role: "k8s_master"
+- hosts: tag_Name_k8s_slave
+  roles:
+  - role: "k8s_slave"
+
+

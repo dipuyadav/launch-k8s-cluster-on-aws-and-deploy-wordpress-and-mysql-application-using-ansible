@@ -1,0 +1,41 @@
+- hosts: 65.2.124.32
+  vars_prompt:
+    - name: db_pod_name
+      prompt: type name of your db pod
+      private: no
+
+    - name: wp_pod_name
+      prompt: type name of your wp pod
+      private: no
+    
+
+    - name: MYSQL_ROOT_PASSWORD
+      prompt: type your MYSQL_ROOT_PASSWORD
+      private: no
+
+    - name: MYSQL_DATABASE
+      prompt: type your MYSQL_DATABASE name
+      private: no
+
+    - name: MYSQL_USER
+      prompt: type your MYSQL_USER name
+      private: no
+
+    - name: MYSQL_PASSWORD
+      prompt: type this user's MYSQL_PASSWORD
+      private: no
+  tasks:
+  - name: installing db
+    command: "kubectl run {{ db_pod_name }} --image=mysql:5.7 --env=MYSQL_ROOT_PASSWORD={{ MYSQL_ROOT_PASSWORD }} --env=MYSQL_DATABASE={{ MYSQL_DATABASE }} --env=MYSQL_USER={{ MYSQL_USER }} --env=MYSQL_PASSWORD={{ MYSQL_PASSWORD }}"
+  
+  - name: installing wp
+    command: "kubectl run {{ wp_pod_name }} --image=wordpress:5.7.2-php7.3-apache"
+  - name: exposing wp db
+    command: kubectl expose pod {{ wp_pod_name }} --type=NodePort --port=80
+  
+  - command: kubectl get svc
+    register: x
+
+  - name: printing port
+    debug: 
+     var: x

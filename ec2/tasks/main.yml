@@ -1,0 +1,27 @@
+---
+# tasks file for ec2
+- ec2:
+     key_name: "{{ key }}"
+     region: "{{ region }}"
+     instance_type: "{{ instance_type }}"
+     image: "{{ image_id }}"
+     group_id: "{{ security_group_id }}"
+     instance_tags:
+      Name: k8s_master
+     wait: yes
+     count: "{{ count_of_master }}"
+     vpc_subnet_id: "{{ subnet_id }}"
+     assign_public_ip: yes
+- ec2:
+     key_name: "{{ key }}"
+     region: "{{ region }}"
+     instance_type: "{{ instance_type }}"
+     image: "{{ image_id }}"
+     group_id: "{{ security_group_id }}"
+     instance_tags:
+      Name: k8s_slave
+     wait: yes
+     count: "{{ count_of_slave }}"
+     vpc_subnet_id: "{{ subnet_id }}"
+     assign_public_ip: yes
+
